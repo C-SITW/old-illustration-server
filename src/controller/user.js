@@ -5,7 +5,6 @@
 
 const { User, Illustration, Messages } = require('../models/index')  // 获取存入数据库的模板
 
-
 /**
  * 注册
  * @param {string} username 用户名
@@ -32,7 +31,6 @@ async function login(username, password) {
             _id: user._id
         }
     }
-
     return { state: false }
 }
 
@@ -43,10 +41,8 @@ async function login(username, password) {
  */
 async function getUserInfo(id) {
     const userinfo = await User.findById(id)
-
     const likes = await Messages.find({ involve_id: id, type: 0 })
     const Totallikes = likes.length
-
     const data = {
         _id: userinfo._id,
         username: userinfo.username,
@@ -82,40 +78,13 @@ async function updateUserInfo(_id, data) {
 
 /**
  * 用户收藏
- * @param {string} username   用户名
- * @param {Object} data       收藏的插画数据
- */
-// async function collections(username, data) {
-//     const userinfo = await User.find(username)
-//     const old = userinfo[0].collections
-
-//     old.push(data.illustrationid)
-
-//     const newdata = {
-//         collections: old
-//     }
-
-//     const newuserinfo = await User.findOneAndUpdate(
-//         username,   // 条件
-//         { ...newdata },
-//         { new: true }
-//     )
-//     return newuserinfo
-
-// }
-
-/**
- * 
  * @param {string} _id 用户id
  * @param {string} illustrationid 插画id
  */
 async function collections(_id, illustrationid) {
-
-
     // 获取该用户的收藏数据
     const userinfo = await User.findById(_id)
     const olddata = userinfo.collections
-
     // // 判断用户是否收藏
     const state = olddata.includes(illustrationid)
     if (state) {
@@ -126,19 +95,13 @@ async function collections(_id, illustrationid) {
         // 用户没收藏，就进行收藏
         olddata.push(illustrationid)
     }
-
     const collections = { collections: olddata }
-
     const newuserinfo = await User.findOneAndUpdate(
         { _id },   // 条件
         { ...collections },
         { new: true }
     )
-
-
     return newuserinfo
-
-
 }
 
 
@@ -148,24 +111,19 @@ async function collections(_id, illustrationid) {
  */
 async function getCollection(username) {
     const userinfo = await User.find({ username })
-
     const collections = userinfo[0].collections
 
     // 获取插画信息
-    const collectionList = await Illustration.find({
-        _id: { $in: collections }
-    })
-
+    const collectionList = await Illustration.find({ _id: { $in: collections } })
     const data = collectionList.map(el => {
         const _id = el._id
-        const artistname = el.name
-        const book = el.name
+        const artistname = el.artistname
+        const name = el.name
         const imgurl = el.imgurl
-
         return {
             _id,
             artistname,
-            book,
+            name,
             imgurl
         }
     })
