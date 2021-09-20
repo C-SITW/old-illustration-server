@@ -46,9 +46,7 @@ async function getillustration() {
 async function getrecommend() {
     const illustration = await Illustration.aggregate([{ $sample: { size: 5 } }])
     const data = Processing(illustration)
-
     return data
-
 }
 
 
@@ -90,13 +88,12 @@ async function getillustrationInfo(id, userid) {
     const illustrationid = id
     const loginid = userid
     const comments = []
-    const commentlist = await Comment.find({ illustrationid })
+    const commentlist = await Comment.find({ illustrationid }).sort({ createdAt: -1 })
 
     // 每条评论包含用户信息, 获赞数，以及判断登录用户是否点赞了该评论
     for (let el of commentlist) {
         // 获取评论id
         const _id = el._id
-
         // 获取评论内容
         const content = el.content
         // 获取评论时间

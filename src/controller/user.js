@@ -84,24 +84,31 @@ async function updateUserInfo(_id, data) {
 async function collections(_id, illustrationid) {
     // 获取该用户的收藏数据
     const userinfo = await User.findById(_id)
-    const olddata = userinfo.collections
-    // // 判断用户是否收藏
-    const state = olddata.includes(illustrationid)
+    const data = userinfo.collections
+
+    // 判断用户是否收藏
+    let state = data.includes(illustrationid)
+
+
     if (state) {
         // 用户收藏了，就取消收藏
-        const index = olddata.indexOf(illustrationid)
-        olddata.splice(index, 1)
+        let index = data.indexOf(illustrationid)
+        data.splice(index, 1)
     } else {
         // 用户没收藏，就进行收藏
-        olddata.push(illustrationid)
+        data.push(illustrationid)
     }
-    const collections = { collections: olddata }
-    const newuserinfo = await User.findOneAndUpdate(
+
+    const collections = { collections: data }
+    await User.findOneAndUpdate(
         { _id },   // 条件
         { ...collections },
         { new: true }
     )
-    return newuserinfo
+    state = data.includes(illustrationid)
+    return {
+        CollectionState: state
+    }
 }
 
 
@@ -109,9 +116,9 @@ async function collections(_id, illustrationid) {
  * 获取用户收藏列表
  * @param {string} username 用户名
  */
-async function getCollection(username) {
-    const userinfo = await User.find({ username })
-    const collections = userinfo[0].collections
+async function getCollection(id) {
+    const userinfo = await User.findById(id)
+    const collections = userinfo.collections
 
     // 获取插画信息
     const collectionList = await Illustration.find({ _id: { $in: collections } })
@@ -129,6 +136,7 @@ async function getCollection(username) {
     })
 
     return data
+    // return collections
 }
 
 

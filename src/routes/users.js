@@ -45,7 +45,7 @@ router.post('/login', async function (ctx, next) {
         ctx.body = new SuccessModel('登录成功！')
     } else {
         // 返回失败
-        ctx.body = new ErrorModel(10002, `登录验证失败`)
+        ctx.body = new ErrorModel(10002, `用户名或密码错误！`)
     }
 })
 
@@ -63,10 +63,8 @@ router.get('/info', loginCheck, async function (ctx, next) {
 
 // 更新用户信息
 router.patch('/info/', loginCheck, async function (ctx, next) {
-
     const { _id } = ctx.session.userInfo
     const data = ctx.request.body
-
 
     // 更新数据
     const newuserinfo = await updateUserInfo(_id, data)
@@ -76,24 +74,19 @@ router.patch('/info/', loginCheck, async function (ctx, next) {
 
 // 用户收藏插画
 router.patch('/collection', loginCheck, async function (ctx, next) {
-    // const data = ctx.request.body
     const { _id } = ctx.session.userInfo
     const illustrationid = ctx.request.body.illustrationid
 
-
     // 更新数据
-    const coll = await collections(_id, illustrationid)
-    // ctx.body = new SuccessModel(coll)
-    ctx.body = new SuccessModel(coll)
-
+    const data = await collections(_id, illustrationid)
+    ctx.body = new SuccessModel(data)
 })
 
 
 // 获取用户收藏列表
 router.get('/collection', loginCheck, async function (ctx, next) {
-    const { username } = ctx.session.userInfo
-    const collections = await getCollection(username)
-
+    const { _id } = ctx.session.userInfo
+    const collections = await getCollection(_id)
     ctx.body = new SuccessModel(collections)
 })
 

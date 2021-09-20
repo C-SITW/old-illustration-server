@@ -8,8 +8,8 @@ const Artist = require('../../models/Artist')  // 获取存入数据库的模板
 !(async () => {
     // 创建艺术家
     await Artist.create({
-        artistname: `Vidal, Emeric Essex`,
-        artistinfo: `Emeric Essex Vidal was an English watercolourist and naval officer. His opportunities for travel, his curiosity about local customs and human types, and his eye for the picturesque, led him to make paintings which are now historical resources. A landscape painter and a costumbrista, he was the first visual artist to leave records of the ordinary inhabitants of the newly emergent Argentina and Uruguay, including the first depictions of gauchos. He also left records of Canada, Brazil, the West Indies and St Helena, where he sketched the...`
+        artistname: `Tegner, Hans`,
+        artistinfo: `Hans Christian Harald Tegner, known as Hans Tegner, was a Danish artist and illustrator. He is primarily known for his illustrations of literary works by Hans Christian Andersen and Ludvig Holberg and for his work for the Bing & Grøndahl porcelain factory.`
     })
 
     // // 列出所有艺术家

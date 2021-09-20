@@ -109,8 +109,10 @@
 ### response body 
 ```js
 {
-    errno:0,
-    message:'errno !== 0 的话，的错误信息'
+    "errno": 0,
+    "data": {
+        "CollectionState": true   '收藏状态'
+    }
 }
 ```
 
