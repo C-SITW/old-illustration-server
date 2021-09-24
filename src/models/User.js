@@ -25,7 +25,7 @@ const Schema = mongoose.Schema({
     },
     imgurl: {
         type: String,
-        default: 'http://192.168.31.66:3000/images/useravatar/DefaultAvatar.jpeg'
+        default: 'localhost:3000/images/useravatar/DefaultAvatar.jpeg'
     },
     introduction: {
         type: String,

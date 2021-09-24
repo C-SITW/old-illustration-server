@@ -3,34 +3,37 @@
  * @author SITW
  */
 
-const { Comment } = require('../models/index')  // 获取存入数据库的模板
+const { SuccessModel, ErrorModel } = require('../res-model/index')
+const { Comment } = require('../models/index')
 
+class Commentcontroller {
+    // 创建评论
+    static async createComment(ctx) {
+        const { _id } = ctx.session.userInfo
+        const { illustrationid, content } = ctx.request.body
+        const data = await Comment.create({ userid: _id, illustrationid, content })
 
-
-/**
- * 创建评论
- * @param {String} username 用户名
- * @param {Array} data 获取评论数据
- */
-async function createComment(userid, data) {
-
-    const { illustrationid, content } = data
-
-
-    const newdata = await Comment.create(
-        {
-            userid,
-            illustrationid,
-            content
+        try { ctx.body = new SuccessModel(data) }
+        catch (ex) {
+            console.error(ex)
+            ctx.body = new ErrorModel(1006, '评论创建失败')
         }
-    )
+    }
 
-    return newdata
+    // 删除评论
+    static async removeComment(ctx) {
+        const { _id } = ctx.session.userInfo
+        const { commentid } = ctx.request.body
+        const data = await Comment.remove({ userid: _id, _id: commentid })
 
+        try { ctx.body = new SuccessModel(data) }
+        catch (ex) {
+            console.error(ex)
+            ctx.body = new ErrorModel(1006, '评论删除失败')
+        }
+    }
 }
 
 
 
-module.exports = {
-    createComment
-}
+module.exports = Commentcontroller

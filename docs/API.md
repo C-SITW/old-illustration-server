@@ -1,12 +1,13 @@
 # API
 
-## 注册
+## 1.注册
 ### url 
 ```js
 /api/user/register
 ```
 ### method  
 `post`
+
 ### request body  
 ```js
 {
@@ -22,7 +23,7 @@
 }
 ```
 
-## 登录
+## 2.登录
 ### url 
 ```js
 /api/user/login
@@ -44,7 +45,7 @@
 }
 ```
 
-## 获取用户信息
+## 3.获取用户信息
 ### url 
 ```js
 /api/user/info
@@ -69,7 +70,7 @@
 }
 ```
 
-## 更新用户信息
+## 4.更新用户信息
 ### url 
 ```js
 /api/user/info
@@ -93,7 +94,7 @@
 }
 ```
 
-## 用户收藏插画
+## 5.用户收藏插画
 ### url 
 ```js
 /api/user/collection
@@ -116,7 +117,7 @@
 }
 ```
 
-## 获取用户收藏插画
+## 6.获取用户收藏插画
 ### url 
 ```js
 /api/user/collection
@@ -145,7 +146,7 @@
 
 
 
-## 获取全部艺术家 
+## 7.获取全部艺术家 
 ### url 
 ```js
 /api/artist
@@ -171,7 +172,7 @@
 ```
 
 
-## 艺术家详情
+## 8.艺术家详情
 ### url 
 ```js
 /api/artist/:id
@@ -206,13 +207,14 @@
 
 
 
-## 获取全部插画
+## 9.获取指定插画数
 ### url 
 ```js
-/api/illustration
+/api/recommend/:id  //指定返回多少
 ```
 ### method  
 `get`
+
 ### request body  
 无
 ### response body 
@@ -233,34 +235,10 @@
 }
 ```
 
-## 获取推荐插画
-### url 
-```js
-/api/illustration/recommend 
-```
-### method  
-`get`
-### request body  
-无
-### response body 
-```js
-{
-    "errno": 0,
-    "data": [
-        {
-            "_id": "插画id",
-            "artistname": "艺术家名字",
-            "book": "所属书名",
-            "imgurl": "插画图片URL"
-        },
-        {...}
-    ]
-}
-    message:'errno !== 0 的话，的错误信息'
-}
-```
 
-## 获取插画详情
+
+## 10.获取插画详情
+
 ### url 
 ```js
 /api/illustration/:id 
@@ -303,7 +281,9 @@
 ```
 
 
-## 创建评论 
+
+## 11.创建评论 
+
 ### url 
 ```js
 /api/comment
@@ -326,7 +306,41 @@
 ```
 
 
-## 创建或删除 信息流  
+
+## 12.删除评论 
+
+### url 
+
+```js
+/api/comment
+```
+
+### method  
+
+`delete`
+
+### request body  
+
+```js
+{
+    "illustrationid": "评论在那副插画id",
+    "commentid": "该评论的id"
+}
+```
+
+### response body 
+
+```js
+{
+    errno:0,
+    message:'errno !== 0 的话，的错误信息'
+}
+```
+
+
+
+## 13. 创建或删除 信息流  
+
 ### url 
 ```js
 /api/messages
@@ -351,7 +365,9 @@
 ```
 
 
-## 根据用户获取 信息流  
+
+## 14.获取所属信息流  
+
 ### url 
 ```js
 /api/messages

@@ -9,11 +9,6 @@ const session = require('koa-generic-session')
 const cors = require('koa2-cors')
 
 const index = require('./routes/index')
-const users = require('./routes/users')
-const artist = require('./routes/artist')
-const illustration = require('./routes/illustration')
-const comment = require('./routes/comment')
-const messages = require('./routes/messages')
 
 // error handler
 onerror(app)
@@ -60,11 +55,7 @@ app.use(async (ctx, next) => {
 
 // routes
 app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
-app.use(artist.routes(), artist.allowedMethods())
-app.use(illustration.routes(), illustration.allowedMethods())
-app.use(comment.routes(), comment.allowedMethods())
-app.use(messages.routes(), messages.allowedMethods())
+
 
 // error-handling
 app.on('error', (err, ctx) => {
