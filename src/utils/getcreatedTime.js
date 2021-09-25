@@ -9,17 +9,20 @@ async function getcreatedTime(createdAt) {
     const time = new Date(createdAt).getTime()
 
     // 获取该信息流距离现在过去了多久
-    const sjc = nowtime - time
-    const juli = parseInt(sjc / 1000 / 60)
+    const timestamp = nowtime - time
+    const distance = parseInt(timestamp / 1000 / 60)
 
     let data = ''
-
-    if (juli < 5) {
+    if (distance < 1) {
         data = '刚刚'
-    } else if (juli < 60) {
-        data = `${juli}分钟前`
+    } else if (distance < 59) {
+        data = `${distance}分钟前`
+    } else if (distance < 1439) {
+        const h = Math.round(distance / 60)
+        data = `${h}小时前`
     } else {
-        data = new Date(createdAt).toLocaleString()
+        olddata = new Date(createdAt).toLocaleString()
+        data = olddata.substring(0, 9)
     }
     return data
 }

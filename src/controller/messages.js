@@ -36,7 +36,7 @@ class Messagescontroller {
     static async getMessages(ctx) {
         const { _id } = ctx.session.userInfo
         let userlist = []
-        const message = await Messages.find({ involve_id: _id })
+        const message = await Messages.find({ involve_id: _id }).sort({ createdAt: -1 })
 
         // 处理数据
         for (let el of message) {
