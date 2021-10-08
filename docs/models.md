@@ -1,5 +1,18 @@
 # 数据模型设计
 
+## 管理用户 adminuser
+```js
+{
+    _id:'xxx'
+    username:'18677778888',
+    passworld:'123'
+    type:1,
+    mg_state:true,
+    role_name:'超级管理员'
+}
+```
+
+
 ## 用户 user
 ```js
 {
