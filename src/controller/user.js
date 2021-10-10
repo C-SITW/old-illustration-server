@@ -5,6 +5,7 @@
 
 const { SuccessModel, ErrorModel } = require('../res-model/index')
 const { User, Illustration, Messages } = require('../models/index')
+const { getPagingData, VerificationInfo } = require('../utils/index')
 
 class Usercontroller {
     // 注册
@@ -58,6 +59,28 @@ class Usercontroller {
         }
         try { ctx.body = new SuccessModel(data) }
         catch (ex) { ctx.body = new ErrorModel(10004, `获取用户信息失败 ${ex.message}`) }
+    }
+
+    // 获取用户分页列表
+    static async getPagerlist(ctx) {
+        const { query, pagenum, pagesize } = ctx.request.body
+
+        // 获取分页数据
+        const pager = await getPagingData(pagesize, pagenum, User)
+
+        // 校对数据
+        const arr = ["_id", "age", "sex", "username", "createdAt"]
+        const data = VerificationInfo(pager.data, arr)
+
+        const newdata = {
+            maxNum: pager.maxNum,
+            pageSize: pager.pageSize,
+            pageCount: pager.pageCount,
+            pagenum: pager.pagenum,
+            data
+        }
+
+        ctx.body = newdata
     }
 
     // 更新用户信息
