@@ -5,6 +5,7 @@
 
 const { SuccessModel, ErrorModel } = require('../res-model/index')
 const { Comment } = require('../models/index')
+const { getPagingData } = require('../utils/index')
 
 class Commentcontroller {
     // 创建评论
@@ -19,6 +20,17 @@ class Commentcontroller {
             ctx.body = new ErrorModel(1006, '评论创建失败')
         }
     }
+
+    // 获取评论分页列表
+    static async getPagerlist(ctx) {
+        const { query, pagenum, pagesize } = ctx.request.body
+
+        // 获取分页数据
+        const pager = await getPagingData(pagesize, pagenum, Comment)
+
+        ctx.body = pager
+    }
+
 
     // 删除评论
     static async removeComment(ctx) {
