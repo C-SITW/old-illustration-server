@@ -9,6 +9,7 @@ const session = require('koa-generic-session')
 const cors = require('koa2-cors')
 
 const index = require('./routes/index')
+const admin = require('./routes/admin')
 
 // error handler
 onerror(app)
@@ -55,6 +56,7 @@ app.use(async (ctx, next) => {
 
 // routes
 app.use(index.routes(), index.allowedMethods())
+app.use(admin.routes(), admin.allowedMethods())
 
 
 // error-handling
