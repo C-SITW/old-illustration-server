@@ -6,7 +6,11 @@
     _id:'xxx'
     username:'18677778888',
     passworld:'123'
-    type:1,
+    jurisdiction:{
+        readable:true,
+        Writable:true
+    }, 
+    type:1, //类型
     mg_state:true,
     role_name:'超级管理员'
 }
