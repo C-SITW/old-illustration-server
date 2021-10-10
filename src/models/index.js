@@ -9,9 +9,11 @@ const Artist = require('./Artist')
 const Illustration = require('./Illustration')
 const Comment = require('./Comment')
 const Messages = require('./Messages')
+const Adminuser = require('./Adminuser')
 
 
 module.exports = {
+    Adminuser,
     User,
     Artist,
     Illustration,
