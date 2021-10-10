@@ -8,7 +8,7 @@
   <em>old-illustration-server</em> 基于 Koa2 开发
 </blockquote>
 <p align="center">
-  <a href="/docs/API.md">API</a>&nbsp;|&nbsp;<a href="/docs/models.md">Models</a>&nbsp;|&nbsp;<a href="https://gitee.com/sitw/old-illustration">项目</a>&nbsp;|&nbsp;<a href="#使用">使用</a>&nbsp;
+  <a href="/docs/API.md">API</a>&nbsp;|<a href="/docs/adminAPI.md">adminAPI</a>&nbsp;|&nbsp;<a href="/docs/models.md">Models</a>&nbsp;|&nbsp;<a href="https://gitee.com/sitw/old-illustration">项目</a>&nbsp;|&nbsp;<a href="#使用">使用</a>&nbsp;
 </p>
 
 ## 使用
