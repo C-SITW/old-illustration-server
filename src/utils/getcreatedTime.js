@@ -27,4 +27,4 @@ async function getcreatedTime(createdAt) {
     return data
 }
 
-module.exports = { getcreatedTime }
+module.exports = getcreatedTime
