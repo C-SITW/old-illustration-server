@@ -5,10 +5,43 @@
 
 
 const { Illustration, Comment, User, Messages } = require('../models/index')
-const { getcreatedTime } = require('../utils/getcreatedTime')
 const { SuccessModel, ErrorModel } = require('../res-model/index')
+const { getcreatedTime, getPagingData, Update } = require('../utils/index')
 
 class Illustrationcontroller {
+
+    // 创建新插画
+    static async createillustration(ctx) {
+        const data = ctx.request.body
+
+        // 保存到数据库
+        const newIllustration = await Illustration.create(data)
+        // 判断执行成功与否
+        try {
+            ctx.body = new SuccessModel(newIllustration)
+        } catch (ex) {
+            ctx.body = new ErrorModel(10001, `创建失败 ${ex.message}`)
+        }
+    }
+
+    // 获取单个插画信息
+    static async getillustrationinfo(ctx) {
+        const id = ctx.params.id
+        const data = await Illustration.findById(id)
+
+        try { ctx.body = new SuccessModel(data) }
+        catch (ex) { ctx.body = new ErrorModel(10004, `获取用户信息失败 ${ex.message}`) }
+    }
+
+    // 获取指插画分页列表
+    static async getPagerlist(ctx) {
+        const { query, pagenum, pagesize } = ctx.request.body
+        // 获取分页数据
+        const pager = await getPagingData(pagesize, pagenum, Illustration)
+
+        ctx.body = pager
+    }
+
     // 获取指定插画列表数
     static async getrecommend(ctx) {
         const { id } = ctx.params
@@ -26,7 +59,7 @@ class Illustrationcontroller {
         ctx.body = new SuccessModel(data)
     }
 
-    // 获取插画详情
+    // 获取插画详情(包含评论)
     static async getillustrationInfo(ctx) {
         const id = ctx.params.id
         const userid = ctx.session.userInfo._id
@@ -84,6 +117,31 @@ class Illustrationcontroller {
         const data = { _id, artistid, artistname, imgurl, name, book, cn, en, collection, comments }
         ctx.body = new SuccessModel(data)
     }
+
+    // 更新插画数据
+    static async updataillustrationinfo(ctx) {
+        const _id = ctx.params.id
+        const data = ctx.request.body
+
+        const newinfo = await Update(_id, data, Illustration)
+        ctx.body = new SuccessModel(newinfo)
+    }
+
+    // 删除单个插画
+    static async remove(ctx) {
+        const id = ctx.params.id
+
+        const data = await Illustration.remove({ _id: id })
+
+        try { ctx.body = new SuccessModel(data) }
+        catch (ex) {
+            console.error(ex)
+            ctx.body = new ErrorModel(1006, '删除失败')
+        }
+    }
+
+
+
 
 }
 
